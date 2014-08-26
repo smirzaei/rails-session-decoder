@@ -4,7 +4,7 @@
   "description": "Simple utility for decoding Rails 4.x sessions in node.js",
   "main": "index.js",
   "scripts": {
-    "test": "mocha $(find . -name '*.test.js') -G -R list"
+    "test": "time mocha $(find . -name '*.test.js') -G -R list"
   },
   "repository": {
     "type": "git",
