@@ -25,23 +25,30 @@ Usage:
 
 Methods
 --------------
-Decode a normal cookie.
-`#decodeCookie(cookieString, callback)`
+**Decode a normal cookie.**
 
-Decode a Signed cookie.
-`#decodeSignedCookie(cookieString, callback)`
+    #decodeCookie(cookieString, callback)
 
-Change the secret.
-`#setSecret(newValue)`
+**Decode a Signed cookie.**
 
-Change the normal cookie salt.
-`#setCookieSalt(newValue)`
+    #decodeSignedCookie(cookieString, callback)
 
-Change the signed cookie salt.
-`#setSignedCookieSalt(newValue)`
+**Change the secret.**
 
-Change the number of iterations for the `PBKDF2` key generator .
-`#setIterations(newValue)`
+    #setSecret(newValue)
 
-Change the key length of the `PBKDF2` key generator.
-`#setIterations(newValue)`
+**Change the normal cookie salt.**
+
+    #setCookieSalt(newValue)
+
+**Change the signed cookie salt.**
+
+    #setSignedCookieSalt(newValue)
+
+**Change the number of iterations for the `PBKDF2` key generator .**
+
+    #setIterations(newValue)
+
+**Change the key length of the `PBKDF2` key generator.**
+
+    #setIterations(newValue)
