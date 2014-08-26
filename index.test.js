@@ -13,7 +13,6 @@ describe('Constructor', function() {
   })
 });
 
-
 describe('Defaults', function(){
 
   it('has the correct cookieSalt', function() {
@@ -31,5 +30,32 @@ describe('Defaults', function(){
   it('has the correct keyLength', function() {
     sut.keyLength.should.be.exactly(64);
   });
+});
 
+describe('#decodeCookie', function() {
+  it('returns error when the cookie is not provided', function (done) {
+    sut.decodeCookie(null, function(err, result) {
+      err.should.be.ok;
+
+      done();
+    })
+  });
+
+  it('returns error when the format invalid', function (done) {
+    sut.decodeCookie('InvalidCookie', function(err, result) {
+      err.should.be.ok;
+
+      done();
+    })
+  });
+
+  it('returns the expected values', function (done) {
+    sut.decodeCookie(cookie, function(err, result) {
+      (err == null).should.be.true;
+
+      JSON.parse(result).should.eql(session);
+
+      done();
+    })
+  })
 });
