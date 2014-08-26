@@ -57,5 +57,25 @@ describe('#decodeCookie', function() {
 
       done();
     })
-  })
+  });
+});
+
+describe('#decodeSignedCookie', function() {
+  it('returns error when the cookie is not provided', function (done) {
+    sut.decodeSignedCookie(null, function(err, result) {
+      err.should.be.ok;
+
+      done();
+    })
+  });
+
+  it('returns error when the format invalid', function (done) {
+    sut.decodeSignedCookie('InvalidCookie', function(err, result) {
+      err.should.be.ok;
+
+      done();
+    })
+  });
+
+  //TODO: add a test case for signed cookie final value.
 });

@@ -12,8 +12,7 @@ module.exports = function(secret) {
   this.iterations = 1000;
   this.keyLength = 64;
 
-
-  this.decodeCookie = function decodeCookie(cookie, next) {
+  function decodeCookie(cookie, isSignedCookie, next) {
     if (!cookie) {
       return next(new Error('cookie was empty.'))
     }
@@ -33,8 +32,9 @@ module.exports = function(secret) {
 
     var data = new Buffer(sessionDataSegments[0], 'base64');
     var iv = new Buffer(sessionDataSegments[1], 'base64');
+    var salt = isSignedCookie ? this.signedCookieSalt : this.cookieSalt;
 
-    crypto.pbkdf2(this.secret, this.cookieSalt, this.iterations, this.keyLength, function(err, derivedKey) {
+    crypto.pbkdf2(this.secret, salt, this.iterations, this.keyLength, function(err, derivedKey) {
       if (err) return next(err);
 
       var decipher = crypto.createDecipheriv('aes-256-cbc', derivedKey.slice(0, 32), iv);
@@ -44,12 +44,22 @@ module.exports = function(secret) {
     });
   };
 
+
+  this.decodeCookie = function(cookie, next) {
+    return decodeCookie(cookie, false, next);
+  };
+
+  this.decodeSignedCookie = function(cookie, next) {
+    return decodeCookie(cookie, true, next);
+  };
+
   return {
     secret: this.secret,
     cookieSalt: this.cookieSalt,
     signedCookieSalt: this.signedCookieSalt,
     iterations: this.iterations,
     keyLength: this.keyLength,
-    decodeCookie: this.decodeCookie
+    decodeCookie: this.decodeCookie,
+    decodeSignedCookie: this.decodeSignedCookie
   };
 };
