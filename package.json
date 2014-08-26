@@ -1,6 +1,6 @@
 {
   "name": "rails-session-decoder",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Simple utility for decoding Rails 4.x sessions in node.js",
   "main": "index.js",
   "scripts": {
