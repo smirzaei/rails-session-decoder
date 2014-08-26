@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/smirzaei/node-rails-session.svg?branch=master)](https://travis-ci.org/smirzaei/node-rails-session)
+[![Build Status](https://travis-ci.org/smirzaei/rails-session-decoder.svg?branch=master)](https://travis-ci.org/smirzaei/rails-session-decoder)
 
 Simple utility for decoding Rails 4.x sessions in node.js
 
@@ -22,3 +22,26 @@ Usage:
 	  console.log(sessionData);
 	  // => {"session_id":"1cc5440b929e539280d94888629565d1","_csrf_token":"CzzmfmhiXOMfGDsL4wkUNsvgyjG7215I73e6bXX1MlQ="}
     });
+
+Methods
+--------------
+Decode a normal cookie.
+`#decodeCookie(cookieString, callback)`
+
+Decode a Signed cookie.
+`#decodeSignedCookie(cookieString, callback)`
+
+Change the secret.
+`#setSecret(newValue)`
+
+Change the normal cookie salt.
+`#setCookieSalt(newValue)`
+
+Change the signed cookie salt.
+`#setSignedCookieSalt(newValue)`
+
+Change the number of iterations for the `PBKDF2` key generator .
+`#setIterations(newValue)`
+
+Change the key length of the `PBKDF2` key generator.
+`#setIterations(newValue)`
