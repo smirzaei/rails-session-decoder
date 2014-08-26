@@ -80,3 +80,58 @@ describe('#decodeSignedCookie', function() {
 
   //TODO: add a test case for signed cookie final value.
 });
+
+describe('#setSecret', function() {
+  it('updates the secret', function() {
+    var newSecret = 'new secret';
+    decoder.secret.should.eql(secret);
+
+    decoder.setSecret(newSecret);
+
+    decoder.secret.should.eql(newSecret);
+  })
+});
+
+describe('#setCookieSalt', function() {
+  it('updates the cookieSalt', function() {
+    var newCookieSalt = 'new cookieSalt';
+    decoder.cookieSalt.should.eql(cookieSalt);
+
+    decoder.setCookieSalt(newCookieSalt);
+
+    decoder.cookieSalt.should.eql(newCookieSalt);
+  })
+});
+
+describe('#setSignedCookieSalt', function() {
+  it('updates the signedCookieSalt', function() {
+    var newSignedCookieSalt = 'new signedCookieSalt';
+    decoder.signedCookieSalt.should.eql(signedCookieSalt);
+
+    decoder.setSignedCookieSalt(newSignedCookieSalt);
+
+    decoder.signedCookieSalt.should.eql(newSignedCookieSalt);
+  })
+});
+
+describe('#setIterations', function() {
+  it('updates the iterations', function() {
+    var newIterations = 2000;
+    decoder.iterations.should.eql(1000);
+
+    decoder.setIterations(newIterations);
+
+    decoder.iterations.should.eql(newIterations);
+  })
+});
+
+describe('#setKeyLength', function() {
+  it('updates the keyLength', function() {
+    var newKeyLength = 128;
+    decoder.keyLength.should.eql(64);
+
+    decoder.setKeyLength(newKeyLength);
+
+    decoder.keyLength.should.eql(newKeyLength);
+  })
+});

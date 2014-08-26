@@ -53,6 +53,26 @@ module.exports = function(secret) {
     return decodeCookie(cookie, true, next);
   };
 
+  this.setSecret = function(newSecret) {
+    this.secret = newSecret;
+  };
+
+  this.setCookieSalt = function(newCookieSalt) {
+    this.cookieSalt = newCookieSalt;
+  };
+
+  this.setSignedCookieSalt = function(newSignedCookieSalt) {
+    this.signedCookieSalt = newSignedCookieSalt;
+  };
+
+  this.setIterations = function(newIterations) {
+    this.iterations = newIterations;
+  };
+
+  this.setKeyLength = function(newKeyLength) {
+    this.keyLength = newKeyLength;
+  };
+
   return {
     secret: this.secret,
     cookieSalt: this.cookieSalt,
@@ -60,6 +80,11 @@ module.exports = function(secret) {
     iterations: this.iterations,
     keyLength: this.keyLength,
     decodeCookie: this.decodeCookie,
-    decodeSignedCookie: this.decodeSignedCookie
+    decodeSignedCookie: this.decodeSignedCookie,
+    setSecret: this.setSecret,
+    setCookieSalt: this.setCookieSalt,
+    setSignedCookieSalt: this.setSignedCookieSalt,
+    setIterations: this.setIterations,
+    setKeyLength: this.setKeyLength
   };
 };
