@@ -51,7 +51,7 @@ Methods
 
 **Change the key length of the `PBKDF2` key generator.**
 
-    #setIterations(newValue)
+    #setKeyLength(newValue)
 
 
 TODO
