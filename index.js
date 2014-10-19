@@ -37,7 +37,7 @@ module.exports = function(secret) {
     crypto.pbkdf2(this.secret, salt, this.iterations, this.keyLength, function(err, derivedKey) {
       if (err) return next(err);
 
-      var decipher = crypto.createDecipheriv('aes-256-cbc', derivedKey.slice(0, 32), iv);
+      var decipher = crypto.createDecipheriv('aes-256-cbc', derivedKey.slice(0, 32), iv.slice(0, 16));
       var decryptedData = decipher.update(data, 'binary', 'utf8') + decipher.final('utf8');
 
       next(null, decryptedData);
