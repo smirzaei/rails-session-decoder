@@ -40,11 +40,11 @@ module.exports = function(secret) {
       try {
         var decipher = crypto.createDecipheriv('aes-256-cbc', derivedKey.slice(0, 32), iv.slice(0, 16));
         var decryptedData = decipher.update(data, 'binary', 'utf8') + decipher.final('utf8');
-      } catch(e) {
-          return next(e);
-      }
 
-      next(null, decryptedData);
+        next(null, decryptedData);
+      } catch(e) {
+        next(e);
+      }
     });
   };
 
