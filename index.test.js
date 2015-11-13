@@ -95,7 +95,7 @@ describe('#setSecret', function() {
 describe('#setCookieSalt', function() {
   it('updates the cookieSalt', function() {
     var newCookieSalt = 'new cookieSalt';
-    decoder.cookieSalt.should.eql(cookieSalt);
+    decoder.cookieSalt.should.eql('encrypted cookie');
 
     decoder.setCookieSalt(newCookieSalt);
 
@@ -106,7 +106,7 @@ describe('#setCookieSalt', function() {
 describe('#setSignedCookieSalt', function() {
   it('updates the signedCookieSalt', function() {
     var newSignedCookieSalt = 'new signedCookieSalt';
-    decoder.signedCookieSalt.should.eql(signedCookieSalt);
+    decoder.signedCookieSalt.should.eql('signed encrypted cookie');
 
     decoder.setSignedCookieSalt(newSignedCookieSalt);
 
