@@ -1,7 +1,8 @@
 var crypto = require('crypto');
 
-function RailsSessionDecoder(secret) {
+function RailsSessionDecoder(secret, digest) {
   this.secret = secret;
+  this.digest = digest || 'sha1';
   this.cookieSalt = 'encrypted cookie'; //Rails.application.config.action_dispatch.encrypted_cookie_salt
   this.signedCookieSalt = 'signed encrypted cookie'; //Rails.application.config.action_dispatch.encrypted_signed_cookie_salt
   this.iterations = 1000;
@@ -18,6 +19,10 @@ RailsSessionDecoder.prototype.decodeSignedCookie = function (cookie, next) {
 
 RailsSessionDecoder.prototype.setSecret = function(newSecret) {
   this.secret = newSecret;
+};
+
+RailsSessionDecoder.prototype.setDigest = function(newDigest) {
+  this.digest = newDigest;
 };
 
 RailsSessionDecoder.prototype.setCookieSalt = function(newCookieSalt) {
@@ -59,7 +64,7 @@ RailsSessionDecoder.prototype.decodeCookieFn = function (cookie, isSignedCookie,
   var iv = new Buffer(sessionDataSegments[1], 'base64');
   var salt = isSignedCookie ? this.signedCookieSalt : this.cookieSalt;
 
-  crypto.pbkdf2(this.secret, salt, this.iterations, this.keyLength, function(err, derivedKey) {
+  crypto.pbkdf2(this.secret, salt, this.iterations, this.keyLength, this.digest, function(err, derivedKey) {
     if (err) return next(err);
 
     try {
