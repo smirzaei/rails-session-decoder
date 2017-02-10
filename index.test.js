@@ -5,8 +5,8 @@ var should = require('should'),
 var secret = '52541783ebfc236dc27e1d83cba2a4144b484897995bdf4d9a9977623987ee10b6e690d3c4218ebc50eccfb68f5babc3db0fcb131d3fbbce142803a03ac500db';
 var cookie = 'N0paYjIyWTNIOWgxV2VON0RCM1AvenZzQVNFeWY0elBoQkZ5SnN4OVAybXZQMEErV0VGa1luM2VmYTg4cEk0Y2paVUtMUW8xbEQyUE5VbFJ1OTZUeWJiODdYNkxZSWxvYUtiaE1ucy9LM1BMUy8yd0N0ZExZQzYzUVFsaGZ4M044MjdOdWNJYWhMbW5HOTJpY2UzQUdBPT0tLWtuWk9IWVJpakpWak5oSmZ2d2VLbWc9PQ==--d4292397f777c8f79655884b3fcc241e4bc2fcf5';
 var session = JSON.parse('{"session_id":"1cc5440b929e539280d94888629565d1","_csrf_token":"CzzmfmhiXOMfGDsL4wkUNsvgyjG7215I73e6bXX1MlQ="}');
-
-var decoder = sessionDecoder(secret);
+var digest = 'sha1';
+var decoder = sessionDecoder(secret, digest);
 
 describe('Constructor', function() {
   it('stores the secret', function() {
@@ -15,6 +15,10 @@ describe('Constructor', function() {
 });
 
 describe('Defaults', function(){
+
+  it('has the correct digest', function() {
+    decoder.digest.should.be.exactly(digest);
+  });
 
   it('has the correct cookieSalt', function() {
     decoder.cookieSalt.should.be.exactly('encrypted cookie');
@@ -90,6 +94,17 @@ describe('#setSecret', function() {
 
     decoder.secret.should.eql(newSecret);
   })
+});
+
+describe('#setDigest', function() {
+  it('updates the digest', function() {
+    var newDigest = 'sha512';
+    decoder.digest.should.eql(digest);
+
+    decoder.setDigest(newDigest);
+
+    decoder.digest.should.eql(newDigest);
+  });
 });
 
 describe('#setCookieSalt', function() {
