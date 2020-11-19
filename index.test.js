@@ -82,7 +82,23 @@ describe('#decodeSignedCookie', function() {
     })
   });
 
-  //TODO: add a test case for signed cookie final value.
+  it('returns the expected values', function (done) {
+    decoder.decodeSignedCookie(cookie, function(err, result) {
+      (err == null).should.be.true;
+
+      JSON.parse(result).should.eql(session);
+
+      done();
+    })
+  });
+
+  it('returns error when the cookie signature is wrong', function (done) {
+    decoder.decodeSignedCookie(cookie.replace(/.$/,"f"), function(err, result) {
+      err.should.be.ok;
+
+      done();
+    })
+  });
 });
 
 describe('#setSecret', function() {
