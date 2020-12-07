@@ -52,19 +52,28 @@ RailsSessionDecoder.prototype.decodeCookieFn = function (cookie, isSignedCookie,
     return next(new Error('invalid cookie format.'));
   }
 
-  var sessionData = new Buffer(cookieSegments[0], 'base64');
-  // var signature = cookieSegments[1];
+  var sessionData = new Buffer.from(cookieSegments[0], 'base64');
+  var signature = cookieSegments[1];
+
+  if (isSignedCookie) {
+    var hmacKey = crypto.pbkdf2Sync(this.secret, this.signedCookieSalt, this.iterations, this.keyLength, this.digest);
+    var hmac = crypto.createHmac('sha1', hmacKey);
+    hmac.update(cookieSegments[0]);
+    var hmacSignature = hmac.digest('hex');
+    if (signature !== hmacSignature) {
+      return next(new Error('invalid cookie signature.'), null);
+    }
+  }
 
   var sessionDataSegments = sessionData.toString('utf8').split('--');
   if (sessionDataSegments.length != 2) {
     return next(new Error('invalid cookie format.'));
   }
 
-  var data = new Buffer(sessionDataSegments[0], 'base64');
-  var iv = new Buffer(sessionDataSegments[1], 'base64');
-  var salt = isSignedCookie ? this.signedCookieSalt : this.cookieSalt;
+  var data = new Buffer.from(sessionDataSegments[0], 'base64');
+  var iv = new Buffer.from(sessionDataSegments[1], 'base64');
 
-  crypto.pbkdf2(this.secret, salt, this.iterations, this.keyLength, this.digest, function(err, derivedKey) {
+  crypto.pbkdf2(this.secret, this.cookieSalt, this.iterations, this.keyLength, this.digest, function(err, derivedKey) {
     if (err) return next(err);
 
     try {

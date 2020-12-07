@@ -54,10 +54,6 @@ Methods
     #setKeyLength(newValue)
 
 
-TODO
---------------
-* Signature verification is missing.
-
 License
 --------------
 [MIT](https://github.com/smirzaei/rails-session-decoder/blob/master/LICENSE)
